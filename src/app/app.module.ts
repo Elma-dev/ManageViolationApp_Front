@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RadarComponent } from './components/radar/radar.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { InfractionComponent } from './components/infraction/infraction.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    RadarComponent
+    RadarComponent,
+    InfractionComponent
   ],
 
   imports: [

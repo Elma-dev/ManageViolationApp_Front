@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {RadarComponent} from "./components/radar/radar.component";
+import {InfractionComponent} from "./components/infraction/infraction.component";
 
 const routes: Routes = [
-  {path:'radars',component:RadarComponent}
+  {path:'radars',component:RadarComponent},
+  {path:'infractions',component:InfractionComponent}
 ];
 
 @NgModule({
