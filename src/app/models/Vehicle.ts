@@ -8,3 +8,10 @@ export interface Vehicle{
   owner:Owner;
 }
 
+export interface VehiclePage{
+  data:Vehicle[];
+  page:number;
+  size:number;
+  nbrTotal:number;
+}
+

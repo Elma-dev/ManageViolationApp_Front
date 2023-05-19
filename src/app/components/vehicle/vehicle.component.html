@@ -1,1 +1,43 @@
-<p>vehicle works!</p>
+<div class="container">
+  <div class="py-5">
+    <p class="display-3 text-danger text-center" *ngIf="errors">{{errors}}</p>
+    <div *ngIf="vehiclesData!=undefined">
+      <p class="text-center"></p>
+      <table class="table rounded-3 shadow-lg" >
+        <thead class="border text-center">
+        <tr>
+          <th>Registration Number</th>
+          <th>Brand</th>
+          <th>Model</th>
+          <th>Fiscal Power</th>
+          <th>Owner</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody class="border text-center">
+        <tr>
+          <td>26766e93-e348-4125-85f5-8a131df37577</td>
+          <td>Ferrari</td>
+          <td>2023</td>
+          <td>2.3</td>
+          <td>Abdeljalil</td>
+          <td>Abdeljalil@gmail.com</td>
+        </tr>
+
+        <tr *ngFor="let v of vehiclePage.data">
+          <td>{{v.registrationNumber}}</td>
+          <td>{{v.brand}}</td>
+          <td>{{v.model}}</td>
+          <td>{{v.fiscalPower}}</td>
+          <td>{{v.owner.name}}</td>
+          <td>{{v.owner.email}}</td>
+        </tr>
+
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
