@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {InfractionsService} from "../../services/infractions.service";
 import {Infraction, InfractionPage} from "../../models/Infraction";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+// @ts-ignore
+import pdfMake from "node_modules/pdfmake/build/pdfmake";
+// @ts-ignore
+import pdfFonts from "node_modules/pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
 @Component({
   selector: 'app-infraction',
@@ -42,7 +47,38 @@ export class InfractionComponent implements OnInit{
     }
   }
 
-  changePage(i: number) {
+  public changePage(i: number) {
     this.infractionPage=this.getInfractionPage(i);
+  }
+
+  public downloadAsPDF(i:number){
+    let infr=this.infractionsData?.find(e=>e.id==i)
+    let docDefinition = {
+      header:"  Infraction : "+infr!.id
+      ,
+      content: [
+        // Previous configuration
+        {
+
+          text: 'Customer Details:\n\n'+
+            '\tVehicle Registration Number : '+infr!.registrationNumber+
+            '\nModel : '+infr!.vehicle.model+'\n' +
+            'Owner : '+infr!.vehicle.owner.name+'\n\n' +
+            'Radar Details:\n\n'+
+            'Radar Id : '+infr!.radar.id+"\n"+
+            'Vehicle Speed : '+~~(infr!.vehicleSpeed)+'\n\n'+
+            'Amount : '+infr!.amount
+          ,
+          style: 'sectionHeader'
+        }
+      ],
+      styles: {
+        sectionHeader: {
+          fontSize: 14,
+          margin: [0, 15, 0, 15]
+        }
+      }
+    }
+    pdfMake.createPdf(docDefinition).open();
   }
 }

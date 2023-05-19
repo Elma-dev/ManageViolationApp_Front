@@ -8,6 +8,8 @@ export interface Infraction{
   registrationNumber:string;
   radar:Radar;
   vehicle:Vehicle;
+  vehicleSpeed: number;
+  amount: 600;
 }
 
 export interface InfractionPage{
@@ -15,5 +17,6 @@ export interface InfractionPage{
   page : number;
   size: number;
   totalNbrPages: number;
+
 
 }
