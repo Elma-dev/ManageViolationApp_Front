@@ -8,13 +8,15 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RadarComponent } from './components/radar/radar.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { InfractionComponent } from './components/infraction/infraction.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     RadarComponent,
-    InfractionComponent
+    InfractionComponent,
+    VehicleComponent
   ],
 
   imports: [
