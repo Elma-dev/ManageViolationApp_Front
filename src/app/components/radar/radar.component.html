@@ -1,6 +1,6 @@
 <div class="container">
   <div class="py-5">
-    <table class="table rounded-3 shadow-lg">
+    <table class="table rounded-3 shadow-lg" *ngIf="radarData!=undefined">
       <thead class="border text-center">
         <tr>
           <th>Max Speed</th>
@@ -17,7 +17,17 @@
             <button class="btn btn-sm btn-outline-primary me-2"> <i class="bi bi-pen-fill"></i>  </button>
           </td>
         </tr>
+
+        <tr  *ngFor="let r of radarData">
+          <td>{{r.vitessMax}} KM/H</td>
+          <td>{{r.courdonnees[0]|number:'.2-2'}}|{{r.courdonnees[1]|number:'.2-2'}}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger  me-2"> <i class="bi bi-archive-fill"></i>  </button>
+            <button class="btn btn-sm btn-outline-primary me-2"> <i class="bi bi-pen-fill"></i>  </button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
+
 </div>

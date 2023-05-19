@@ -11,6 +11,7 @@ export class RadarService {
   constructor(private httpClient:HttpClient) { }
 
   public getAllRadars():Observable<any>{
+
     return this.httpClient.get("http://localhost:8888/RADAR-MS/radars");
   }
 }
