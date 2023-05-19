@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {RadarService} from "../../services/radar.service";
-import {Radar} from "../../models/Radar";
+import {Radar, RadarPage} from "../../models/Radar";
 
 @Component({
   selector: 'app-radar',
@@ -11,7 +11,9 @@ import {Radar} from "../../models/Radar";
 export class RadarComponent implements OnInit{
 
   radarData:Radar[]|undefined
-  error!:String;
+  radarPages!:RadarPage
+  indxPages!:number[]
+  error!:String
   constructor(private radarServices:RadarService) {
   }
 
@@ -19,14 +21,28 @@ export class RadarComponent implements OnInit{
     console.log("yes")
     this.radarServices.getAllRadars().subscribe({
       next:(data)=>{
-        console.log(data)
-
-        this.radarData=data
+        this.radarData=data;
+        this.radarPages=this.getRadarPages(0);
+        this.indxPages=Array(this.radarPages.nbrTotal).fill(1).map((v,k)=>k)
       },
       error:(er)=>{
         this.error=er.name
       }
     })
+  }
+
+  public getRadarPages(page:number):any {
+    if(this.radarData!=undefined){
+      let size=7
+      let nbrTotalePages=~~(this.radarData.length/size);
+      nbrTotalePages=this.radarData.length%size==0?nbrTotalePages:nbrTotalePages+1;
+      let radarPage=this.radarData.slice(page*size,page*size+size);
+      return {data:radarPage,page:page,size:size,totalNbrPages:nbrTotalePages}
+    }
+  }
+
+  public changePage(page:number){
+    this.radarPages=this.getRadarPages(page);
   }
 
 
