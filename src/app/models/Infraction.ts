@@ -9,3 +9,11 @@ export interface Infraction{
   radar:Radar;
   vehicle:Vehicle;
 }
+
+export interface InfractionPage{
+  infractionPage:Array<Infraction> ;
+  page : number;
+  size: number;
+  totalNbrPages: number;
+
+}

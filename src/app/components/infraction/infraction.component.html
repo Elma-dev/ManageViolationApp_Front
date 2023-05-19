@@ -1,48 +1,42 @@
 <div class="container">
   <div class="py-5">
     <p class="display-3 text-danger text-center" *ngIf="errors">{{errors}}</p>
-    <p class="display-3 text-center text-success" *ngIf="infractionsData!=undefined" >Infractions List</p>
-    <table class="table rounded-3 shadow-lg"  *ngIf="infractionsData!=undefined">
+    <div *ngIf="infractionPage!=undefined">
+      <p class="display-3 text-center text-success"  >Infractions List</p>
+      <table class="table rounded-3 shadow-lg border-danger border" >
 
-      <thead class="border text-center">
-      <tr>
-        <th>Vehicle Registration Number</th>
-        <th>Model</th>
-        <th>Owner</th>
-        <th>Radar coord</th>
-        <th>payed</th>
-        <th>Download</th>
-      </tr>
-      </thead>
-      <tbody class="border text-center">
-      <tr>
-        <td>98bbbd1d-f4f8-4527</td>
-        <td>Abdeljalil</td>
-        <td>116.1 | 130.02</td>
-        <td>
-          <button class="btn"><i class="bi bi-check-circle-fill" style="color: #05e805"></i></button>
-        </td>
-        <td>
-          <button class="btn  me-2"> <i class="bi bi-download" style="color: orangered"></i>  </button>
-        </td>
-      </tr>
+        <thead class="border text-center">
+        <tr>
+          <th>Vehicle Registration Number</th>
+          <th>Model</th>
+          <th>Owner</th>
+          <th>Radar coord</th>
+          <th>payed</th>
+          <th>Download</th>
+        </tr>
+        </thead>
+        <tbody class="border text-center">
+        <tr *ngFor="let infr of infractionPage.infractionPage">
+          <td>{{infr.registrationNumber}}</td>
+          <td>{{infr.vehicle.brand}}</td>
+          <td>{{infr.vehicle.owner.name}}</td>
+          <td>{{infr.radar.courdonnees[0]|number:'.2-2'}} | {{infr.radar.courdonnees[1]|number:'.2-2'}}</td>
+          <td>
+            <button class="btn"><i class="bi bi-check-circle-fill" style="color: #05e805"></i></button>
+          </td>
+          <td>
+            <button class="btn  me-2"> <i class="bi bi-download" style="color: orangered"></i>  </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
 
-      <tr *ngFor="let infr of infractionsData">
-        <td>{{infr.registrationNumber}}</td>
-        <td>{{infr.vehicle.brand}}</td>
-        <td>{{infr.vehicle.owner.name}}</td>
-        <td>{{infr.radar.courdonnees[0]|number:'.2-2'}} | {{infr.radar.courdonnees[1]|number:'.2-2'}}</td>
-        <td>
-          <button class="btn"><i class="bi bi-check-circle-fill" style="color: #05e805"></i></button>
-        </td>
-        <td>
-          <button class="btn  me-2"> <i class="bi bi-download" style="color: orangered"></i>  </button>
-        </td>
-      </tr>
+      <ul class="nav nav-pills">
+        <li *ngFor="let i of pageIndex"><button (click)="changePage(i)" [ngClass]="i==infractionPage.page?'btn-outline-danger':''"  class="btn ms-1" style="background-color: #D9D9D9">{{i}}</button></li>
+      </ul>
 
 
-      </tbody>
-    </table>
+    </div>
   </div>
 
 </div>

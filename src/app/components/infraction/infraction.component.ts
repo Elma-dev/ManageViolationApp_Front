@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InfractionsService} from "../../services/infractions.service";
-import {Infraction} from "../../models/Infraction";
+import {Infraction, InfractionPage} from "../../models/Infraction";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
@@ -10,15 +10,21 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 })
 export class InfractionComponent implements OnInit{
   infractionsData:Infraction[]|undefined
-  errors!:string
+  infractionPage!:InfractionPage;
+  pageIndex!:number[];
+  errors!:string;
+
+
 
   constructor(private infractionServices:InfractionsService) {
   }
   ngOnInit(): void {
     this.infractionServices.getAllInfraction().subscribe({
         next:(data)=>{
-          console.log(data)
           this.infractionsData=data
+          this.infractionPage=this.getInfractionPage(0);
+          this.pageIndex=Array(this.infractionPage.totalNbrPages).fill(1).map((v,k)=>k);
+
         },
         error:(er)=>{
           this.errors=er.name;
@@ -26,4 +32,17 @@ export class InfractionComponent implements OnInit{
     })
   }
 
+  public getInfractionPage(page:number):any {
+    if(this.infractionsData!=undefined){
+      let size=7
+      let nbrTotalePages=~~(this.infractionsData.length/size);
+      nbrTotalePages=this.infractionsData.length%size==0?nbrTotalePages:nbrTotalePages+1;
+      let infractionPage=this.infractionsData.slice(page*size,page*size+size);
+      return {infractionPage:infractionPage,page:page,size:size,totalNbrPages:nbrTotalePages}
+    }
+  }
+
+  changePage(i: number) {
+    this.infractionPage=this.getInfractionPage(i);
+  }
 }
