@@ -12,5 +12,21 @@ nav{
 .activeLinks{
   text-decoration-line: underline;
   text-decoration-thickness: 3px;
-  text-decoration-color: #651b40 !important;
+  text-decoration-color: #05e805 !important;
+}
+
+a{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+button{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
 }

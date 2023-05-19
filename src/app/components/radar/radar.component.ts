@@ -24,7 +24,7 @@ export class RadarComponent implements OnInit{
         this.radarData=data
       },
       error:(er)=>{
-        this.error=er
+        this.error=er.name
       }
     })
   }
