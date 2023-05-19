@@ -11,6 +11,7 @@ export class VehicleComponent implements OnInit{
   errors!:string
   vehiclesData:Vehicle[]|undefined;
   vehiclePage!:VehiclePage;
+  indxPage!:number[];
 
   constructor(private vehicleServices:VehicleService) {
   }
@@ -19,6 +20,7 @@ export class VehicleComponent implements OnInit{
       next:(data)=>{
         this.vehiclesData=data;
         this.vehiclePage=this.getVehiclePage(0)
+        this.indxPage=Array(this.vehiclePage.nbrTotal).fill(1).map((v,k)=>k)
       },
       error:(er)=>{
         this.errors=er.name

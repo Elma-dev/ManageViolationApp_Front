@@ -2,7 +2,7 @@
   <div class="py-5">
     <p class="display-3 text-danger text-center" *ngIf="errors">{{errors}}</p>
     <div *ngIf="vehiclesData!=undefined">
-      <p class="text-center"></p>
+      <p class="text-center text-success display-2">Vehicles List</p>
       <table class="table rounded-3 shadow-lg" >
         <thead class="border text-center">
         <tr>
@@ -33,10 +33,11 @@
           <td>{{v.owner.email}}</td>
         </tr>
 
-
-
         </tbody>
       </table>
+      <ul class="nav nav-pills">
+        <li *ngFor="let i of indxPage" ><button (click)="changePage(i)" [ngClass]="i==vehiclePage.page?'btn-outline-danger':''" class="btn" style="background-color: #D9D9D9">{{i}}</button></li>
+      </ul>
     </div>
   </div>
 

@@ -1,34 +1,27 @@
 <div class="container">
   <div class="py-5">
     <p class="display-3 text-danger text-center">{{error}}</p>
-    <table class="table rounded-3 shadow-lg" *ngIf="radarData!=undefined">
-      <thead class="border text-center">
-        <tr>
-          <th>Max Speed</th>
-          <th>Coordonates</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody class="border text-center">
-        <tr>
-          <td>120 KM/H</td>
-          <td>116.1 | 130.02</td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger  me-2"> <i class="bi bi-archive-fill"></i>  </button>
-            <button class="btn btn-sm btn-outline-primary me-2"> <i class="bi bi-pen-fill"></i>  </button>
-          </td>
-        </tr>
+    <div *ngIf="radarData!=undefined">
+      <p class="text-success display-2 text-center">Radars List</p>
+      <table class="table rounded-3 shadow-lg" >
+        <thead class="border text-center">
+          <tr>
+            <th>RadaraId</th>
+            <th>Max Speed</th>
+            <th>Coordonates</th>
 
-        <tr  *ngFor="let r of radarData">
-          <td>{{r.vitessMax}} KM/H</td>
-          <td>{{r.courdonnees[0]|number:'.2-2'}}|{{r.courdonnees[1]|number:'.2-2'}}</td>
-          <td>
-            <button class="btn btn-sm btn-outline-danger  me-2"> <i class="bi bi-archive-fill"></i>  </button>
-            <button class="btn btn-sm btn-outline-primary me-2"> <i class="bi bi-pen-fill"></i>  </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+        </thead>
+        <tbody class="border text-center">
+
+          <tr  *ngFor="let r of radarData">
+            <td>{{r.id}}</td>
+            <td>{{r.vitessMax}} KM/H</td>
+            <td>{{r.courdonnees[0]|number:'.2-2'}}|{{r.courdonnees[1]|number:'.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>
