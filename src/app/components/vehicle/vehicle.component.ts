@@ -14,6 +14,8 @@ export class VehicleComponent implements OnInit{
   vehiclePage!:VehiclePage;
   indxPage!:number[];
   formGroup!:FormGroup;
+  nbrVehicle!:number
+  nbrOwners!:number
 
   constructor(private vehicleServices:VehicleService,private formBuilder:FormBuilder) {
     this.formGroup=formBuilder.group({
@@ -26,6 +28,10 @@ export class VehicleComponent implements OnInit{
         this.vehiclesData=data;
         this.vehiclePage=this.getVehiclePage(0)
         this.indxPage=Array(this.vehiclePage.nbrTotal).fill(1).map((v,k)=>k)
+        this.nbrVehicle=this.vehiclesData!.length
+        this.nbrOwners=new Set(this.vehiclesData!.map(value => {
+          value.owner.name;
+        })).size
       },
       error:(er)=>{
         this.errors=er.name

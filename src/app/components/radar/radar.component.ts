@@ -16,6 +16,8 @@ export class RadarComponent implements OnInit{
   indxPages!:number[]
   error!:String
   formGroup!:FormGroup
+  radarNbr!:number;
+  radarOn!:number
   constructor(private radarServices:RadarService,private formBuilder:FormBuilder) {
     this.formGroup=this.formBuilder.group({
       keyword:this.formBuilder.control(null)
@@ -29,6 +31,8 @@ export class RadarComponent implements OnInit{
         this.radarData=data;
         this.radarPages=this.getRadarPages(0);
         this.indxPages=Array(this.radarPages.nbrTotal).fill(1).map((v,k)=>k)
+        this.radarNbr=this.radarData!.length
+        this.radarOn=~~(this.radarNbr/2)
       },
       error:(er)=>{
         this.error=er.name

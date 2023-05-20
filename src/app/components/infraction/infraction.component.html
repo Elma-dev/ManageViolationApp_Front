@@ -2,7 +2,8 @@
   <div class="py-5">
     <p class="display-3 text-danger text-center" *ngIf="errors">{{errors}}</p>
     <div *ngIf="infractionPage!=undefined">
-      <p class="display-3 text-center text-success"  >Infractions List</p>
+
+<!--      <p class="display-3 text-center text-success"  >Infractions List</p>-->
       <!--      search-->
       <div class="row height d-flex justify-content-center align-items-center">
         <div class="col-md-6">
@@ -16,10 +17,17 @@
         </div>
 
       </div>
-    <!--      table-->
-      <table class="table rounded-3 shadow-lg border-danger border" >
+<!--      info-->
+      <div class="d-flex ">
+        <div class="border m-3 w-25 text-center shadow-sm border-danger rounded-3 " style="height: 50px"><i class="bi bi-file-earmark" style="font-size: 25px"> Violations:{{infractionNbr}}</i> </div>
+        <div class="border m-3 w-25 text-center shadow-sm border-danger rounded-3" style="height: 50px"><i class=" bi bi-radioactive" style="font-size: 25px"> Radars:</i> </div>
+        <div class="border m-3 w-25 text-center shadow-sm  border-danger rounded-3" style="height: 50px"><i class="bi bi-card-checklist" style="font-size: 25px"> Payed:{{payed}}</i> </div>
 
-        <thead class="border text-center">
+      </div>
+    <!--      table-->
+      <table class="table rounded-5 shadow-lg " >
+
+        <thead class="text-center">
         <tr>
           <th>Vehicle Registration Number</th>
           <th>Model</th>
@@ -31,13 +39,13 @@
           <th>Download</th>
         </tr>
         </thead>
-        <tbody class="border text-center">
+        <tbody class="text-center">
         <tr *ngFor="let infr of infractionPage.infractionPage">
           <td>{{infr.registrationNumber}}</td>
           <td>{{infr.vehicle.brand}}</td>
           <td>{{infr.vehicle.owner.name}}</td>
           <td>{{infr.radar.courdonnees[0]|number:'.2-2'}} | {{infr.radar.courdonnees[1]|number:'.2-2'}}</td>
-          <td>{{infr.vehicleSpeed}}</td>
+          <td>{{infr.vehicleSpeed|number:'.2-2'}}</td>
           <td>{{infr.amount}}</td>
           <td>
             <button class="btn" (click)="setPayed(infr.id)"><i class="bi " [ngClass]="infr.payed==true?'bi-check-circle-fill':'bi-check-circle'" style="color: #05e805"></i></button>

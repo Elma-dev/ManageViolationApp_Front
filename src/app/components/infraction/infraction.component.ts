@@ -27,6 +27,8 @@ export class InfractionComponent implements OnInit{
   pageIndex!:number[];
   errors!:string;
   formGroup!:FormGroup
+  payed!:number
+  infractionNbr!:number
 
 
 
@@ -41,6 +43,8 @@ export class InfractionComponent implements OnInit{
           this.infractionsData=data
           this.infractionPage=this.getInfractionPage(0);
           this.pageIndex=Array(this.infractionPage.totalNbrPages).fill(1).map((v,k)=>k);
+          this.payed=this.infractionsData!.filter(d=>d.payed==true).length
+          this.infractionNbr=this.infractionsData!.length
 
         },
         error:(er)=>{
@@ -51,7 +55,7 @@ export class InfractionComponent implements OnInit{
 
   public getInfractionPage(page:number):any {
     if(this.infractionsData!=undefined){
-      let size=7
+      let size=5
       let nbrTotalePages=~~(this.infractionsData.length/size);
       nbrTotalePages=this.infractionsData.length%size==0?nbrTotalePages:nbrTotalePages+1;
       let infractionPage=this.infractionsData.slice(page*size,page*size+size);
@@ -194,6 +198,7 @@ export class InfractionComponent implements OnInit{
     ).then(r=>{
       if(r.value==true){
         this.infractionPage.infractionPage.map(i=>{i.id==id?i.payed=!i.payed:""})
+        this.payed=this.infractionsData!.filter(d=>d.payed==true).length
     }})
 
   }
