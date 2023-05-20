@@ -12,6 +12,7 @@ import { InfractionComponent } from './components/infraction/infraction.componen
 import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { HomeComponent } from './components/home/home.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

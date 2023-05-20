@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {InfractionsService} from "../../services/infractions.service";
 import {Infraction, InfractionPage} from "../../models/Infraction";
 // @ts-ignore
@@ -6,6 +6,12 @@ import pdfMake from "node_modules/pdfmake/build/pdfmake";
 // @ts-ignore
 import pdfFonts from "node_modules/pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import * as JsBarcode from 'jsbarcode';
+
+
+import Swal from "sweetalert2"
+
+
 
 
 @Component({
@@ -14,6 +20,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./infraction.component.css']
 })
 export class InfractionComponent implements OnInit{
+  @ViewChild('barcode', { static: true }) barcodeElement!: ElementRef;
   infractionsData:Infraction[]|undefined
   infractionPage!:InfractionPage;
   pageIndex!:number[];
@@ -53,32 +60,136 @@ export class InfractionComponent implements OnInit{
 
   public downloadAsPDF(i:number){
     let infr=this.infractionsData?.find(e=>e.id==i)
-    let docDefinition = {
-      header:"  Infraction : "+infr!.id
-      ,
-      content: [
-        // Previous configuration
-        {
 
-          text: 'Customer Details:\n\n'+
-            '\tVehicle Registration Number : '+infr!.registrationNumber+
-            '\nModel : '+infr!.vehicle.model+'\n' +
-            'Owner : '+infr!.vehicle.owner.name+'\n\n' +
-            'Radar Details:\n\n'+
-            'Radar Id : '+infr!.radar.id+"\n"+
-            'Vehicle Speed : '+~~(infr!.vehicleSpeed)+'\n\n'+
-            'Amount : '+infr!.amount
-          ,
-          style: 'sectionHeader'
+
+  // Generate the barcode image and update the docDefinition
+    const barcodeCanvas = document.createElement('canvas');
+    JsBarcode(barcodeCanvas, infr!.id.toString(), {
+      format: 'CODE128',
+      displayValue: false
+    });
+    const barcodeDataURL = barcodeCanvas.toDataURL();
+
+    let docDefinition = {
+      header: {
+        columns: [
+          {
+            text: "Infraction: " + infr!.id,
+            style: 'headerText',
+            alignment: 'center'
+          },
+          {
+            image: barcodeDataURL,
+            fit: [100, 100],
+            alignment: 'center'
+          }
+        ],
+        margin: [0, 0, 0, 10]
+      },
+      content: [
+        {
+          text: 'Customer Details',
+          style: 'sectionHeader',
+          border: [false, false, false, true],
+          margin: [0, 10, 0, 5]
+        },
+        {
+          columns: [
+            {
+              text: 'Vehicle Registration Number: ' + infr!.registrationNumber,
+              style: 'vehicleDetails',
+              border: [true, true, true, false]
+            },
+            {
+              text: 'Owner: ' + infr!.vehicle.owner.name,
+              style: 'vehicleDetails',
+              border: [true, true, true, false]
+            }
+          ]
+        },
+        {
+          text: 'Model: ' + infr!.vehicle.model,
+          style: 'vehicleDetails',
+          border: [false, false, false, true],
+          margin: [0, 0, 0, 10]
+        },
+        {
+          text: 'Radar Details',
+          style: 'sectionHeader',
+          border: [false, false, false, true],
+          margin: [0, 10, 0, 5]
+        },
+        {
+          columns: [
+            {
+              text: 'Radar Id: ' + infr!.radar.id,
+              style: 'radarDetails',
+              border: [true, true, true, false]
+            },
+            {
+              text: 'Vehicle Speed: ' + ~~(infr!.vehicleSpeed),
+              style: 'radarDetails',
+              border: [true, true, true, false]
+            }
+          ]
+        },
+        {
+          text: 'Amount: ' + infr!.amount,
+          style: 'amountDetails',
+          border: [false, false, false, true],
+          margin: [0, 0, 0, 10]
         }
       ],
       styles: {
+        header: {
+          fontSize: 24,
+          bold: true,
+          color: '#3366ff',
+          margin: [0, 0, 0, 20]
+        },
         sectionHeader: {
+          fontSize: 18,
+          bold: true,
+          color: '#6699ff',
+          margin: [0, 20, 0, 10]
+        },
+        vehicleDetails: {
           fontSize: 14,
-          margin: [0, 15, 0, 15]
+          margin: [0, 0, 20, 5]
+        },
+        radarDetails: {
+          fontSize: 14,
+          margin: [0, 0, 20, 5],
+          fillColor: '#f2f2f2'
+        },
+        amountDetails: {
+          fontSize: 14,
+          margin: [0, 0, 0, 20],
+          fillColor: '#ffffcc'
         }
       }
-    }
-    pdfMake.createPdf(docDefinition).open();
+    };
+  //   console.log(barcodeDataURL);
+    docDefinition.header.columns[1].image = barcodeDataURL;
+
+      pdfMake.createPdf(docDefinition).open();
+    Swal.fire(
+      'Good job!',
+      'The Violation Has Ben Downloaded !',
+      'success'
+    )
+
+  }
+
+  setPayed(id: number) {
+    Swal.fire(
+      'Are you sure?',
+      '',
+      'question'
+    ).then(r=>{
+      if(r.value==true){
+        this.infractionPage.infractionPage.map(i=>{i.id==id?i.payed=!i.payed:""})
+    }})
+
   }
 }

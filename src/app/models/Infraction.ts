@@ -10,6 +10,7 @@ export interface Infraction{
   vehicle:Vehicle;
   vehicleSpeed: number;
   amount: 600;
+  payed:boolean ;
 }
 
 export interface InfractionPage{
