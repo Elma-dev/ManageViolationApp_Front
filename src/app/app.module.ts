@@ -10,6 +10,7 @@ import { RadarComponent } from './components/radar/radar.component';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { InfractionComponent } from './components/infraction/infraction.component';
 import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { VehicleComponent } from './components/vehicle/vehicle.component';
     NavbarComponent,
     RadarComponent,
     InfractionComponent,
-    VehicleComponent
+    VehicleComponent,
+    HomeComponent
   ],
 
   imports: [
