@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RadarService} from "../../services/radar.service";
 import {Radar, RadarPage} from "../../models/Radar";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-radar',
@@ -14,7 +15,11 @@ export class RadarComponent implements OnInit{
   radarPages!:RadarPage
   indxPages!:number[]
   error!:String
-  constructor(private radarServices:RadarService) {
+  formGroup!:FormGroup
+  constructor(private radarServices:RadarService,private formBuilder:FormBuilder) {
+    this.formGroup=this.formBuilder.group({
+      keyword:this.formBuilder.control(null)
+    })
   }
 
   ngOnInit(): void {
@@ -46,4 +51,18 @@ export class RadarComponent implements OnInit{
   }
 
 
+  searchRadars() {
+    let key=this.formGroup.value.keyword;
+    let data=this.radarData!.filter(r=> r.id==key)
+    //alert(this.radarPages.data.filter(r=>r.id==key).length==0)
+
+    if(data.length!=0){
+      this.changePage(this.radarPages.page)
+      this.radarPages.data=data
+    }
+    else {
+      this.changePage(this.radarPages.page)
+    }
+
+  }
 }

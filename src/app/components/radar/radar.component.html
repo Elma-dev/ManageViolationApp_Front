@@ -2,9 +2,24 @@
   <div class="py-5">
     <p class="display-3 text-danger text-center">{{error}}</p>
     <div *ngIf="radarData!=undefined">
-      <p class="text-success display-2 text-center">Radars List</p>
-      <table class="table rounded-3 shadow-lg" >
-        <thead class="border text-center">
+    <!--      <p class="text-success display-2 text-center">Radars List</p>-->
+      <!--      search-->
+      <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+          <form [formGroup]="formGroup" (ngSubmit)="searchRadars()">
+            <div class="input-group mb-3">
+              <input formControlName="keyword"  type="text"  class="form-control"  placeholder="search" aria-label="Example text with button addon" aria-describedby="button-addon1">
+              <button  class="btn " style="background-color: rgb(246,143,143)" type="submit" id="button-addon1"><i class="bi bi-search"></i></button>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+
+  <!--      table-->
+      <table class="table rounded-5 shadow-lg" >
+        <thead class=" text-center">
           <tr>
             <th>RadaraId</th>
             <th>Max Speed</th>
@@ -12,12 +27,12 @@
 
           </tr>
         </thead>
-        <tbody class="border text-center">
+        <tbody class="text-center">
 
-          <tr  *ngFor="let r of radarData">
+          <tr  *ngFor="let r of radarPages.data">
             <td>{{r.id}}</td>
             <td>{{r.vitessMax}} KM/H</td>
-            <td>{{r.courdonnees[0]|number:'.2-2'}}|{{r.courdonnees[1]|number:'.2-2'}}</td>
+            <td>{{r.courdonnees[0]|number:'.2-2'}} | {{r.courdonnees[1]|number:'.2-2'}}</td>
           </tr>
         </tbody>
       </table>

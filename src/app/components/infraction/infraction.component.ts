@@ -10,6 +10,7 @@ import * as JsBarcode from 'jsbarcode';
 
 
 import Swal from "sweetalert2"
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 
 
@@ -25,10 +26,14 @@ export class InfractionComponent implements OnInit{
   infractionPage!:InfractionPage;
   pageIndex!:number[];
   errors!:string;
+  formGroup!:FormGroup
 
 
 
-  constructor(private infractionServices:InfractionsService) {
+  constructor(private infractionServices:InfractionsService,private formBuilder:FormBuilder) {
+    this.formGroup=this.formBuilder.group({
+      keyword:this.formBuilder.control(null)
+    })
   }
   ngOnInit(): void {
     this.infractionServices.getAllInfraction().subscribe({
@@ -191,5 +196,19 @@ export class InfractionComponent implements OnInit{
         this.infractionPage.infractionPage.map(i=>{i.id==id?i.payed=!i.payed:""})
     }})
 
+  }
+
+  searchInfraction() {
+    let key=this.formGroup.value.keyword;
+    let data=this.infractionsData!.filter(r=> {return (r.id==key||r.amount==key || r.vehicle.brand.includes(key) || r.vehicle.owner.name.includes(key))})
+    //alert(this.radarPages.data.filter(r=>r.id==key).length==0)
+
+    if(data.length!=0){
+      this.changePage(this.infractionPage.page)
+      this.infractionPage.infractionPage=data
+    }
+    else {
+      this.changePage(this.infractionPage.page)
+    }
   }
 }

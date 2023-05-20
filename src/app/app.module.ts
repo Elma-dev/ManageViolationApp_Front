@@ -11,6 +11,7 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import { InfractionComponent } from './components/infraction/infraction.component';
 import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { HomeComponent } from './components/home/home.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { HomeComponent } from './components/home/home.component';
     BrowserModule,
     NgbModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

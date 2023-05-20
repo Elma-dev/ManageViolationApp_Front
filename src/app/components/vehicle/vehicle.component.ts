@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {VehicleService} from "../../services/vehicle.service";
 import {Vehicle, VehiclePage} from "../../models/Vehicle";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-vehicle',
@@ -12,8 +13,12 @@ export class VehicleComponent implements OnInit{
   vehiclesData:Vehicle[]|undefined;
   vehiclePage!:VehiclePage;
   indxPage!:number[];
+  formGroup!:FormGroup;
 
-  constructor(private vehicleServices:VehicleService) {
+  constructor(private vehicleServices:VehicleService,private formBuilder:FormBuilder) {
+    this.formGroup=formBuilder.group({
+      keyword:this.formBuilder.control(null)
+    })
   }
   ngOnInit(): void {
     this.vehicleServices.getAllVehicles().subscribe({
@@ -42,4 +47,18 @@ export class VehicleComponent implements OnInit{
     this.vehiclePage=this.getVehiclePage(page);
   }
 
+  searchVehicle() {
+    let key=this.formGroup.value.keyword;
+    let data=this.vehiclesData!.filter(r=> {return (r.model==key||r.brand.includes(key) || r.owner.name.includes(key) || r.fiscalPower==key || r.registrationNumber.includes(key))})
+    //alert(this.radarPages.data.filter(r=>r.id==key).length==0)
+
+    if(data.length!=0){
+       this.changePage(this.vehiclePage.page)
+       this.vehiclePage.data=data
+    }
+    else {
+       this.changePage(this.vehiclePage.page)
+    }
+
+  }
 }
