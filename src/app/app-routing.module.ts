@@ -7,11 +7,13 @@ import {HomeComponent} from "./components/home/home.component";
 import {AuthenticatComponent} from "./components/authenticat/authenticat.component";
 import {NavbarComponent} from "./components/navbar/navbar.component";
 import {AuthGuard} from "./guards/auth.guard";
+import {AlreadyAuthGuard} from "./guards/already-auth.guard";
 
 const routes: Routes = [
   {path:"login",component:AuthenticatComponent},
-  {path:'',component:AuthenticatComponent},
-  {path:"user",component:NavbarComponent,canActivate:[AuthGuard],children:[
+  {path:"",component:NavbarComponent,canActivate:[AuthGuard],children:[
+
+      // {path:"",component:HomeComponent},
       {path:'home',component:HomeComponent},
       {path:'radars',component:RadarComponent},
       {path:'vehicles',component:VehicleComponent},

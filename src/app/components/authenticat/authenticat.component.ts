@@ -34,7 +34,7 @@ export class AuthenticatComponent implements OnInit{
         this.user=data;
         this.authentication.authenticate(this.user).subscribe({
           next:data=>{
-            this.router.navigateByUrl("/user/home")
+            this.router.navigateByUrl("/home")
           },
           error:err => {
             this.error=err
