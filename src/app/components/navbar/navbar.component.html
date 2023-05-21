@@ -1,22 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-light shadow shadow-lg ">
   <div class="container-fluid">
-    <img routerLink="" class="rounded-circle shadow-4-strong user-img" alt="avatar2" src="https://static.wixstatic.com/media/b5b46c_8afff7b851fa4284957374a891447506~mv2.png/v1/fill/w_71,h_71,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/without_text.png" />
+    <img routerLink="home" class="rounded-circle shadow-4-strong user-img" alt="avatar2" src="https://static.wixstatic.com/media/b5b46c_8afff7b851fa4284957374a891447506~mv2.png/v1/fill/w_71,h_71,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/without_text.png" />
 
     <div class="collapse navbar-collapse ms-4 " id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white   "  routerLink="/radars"  routerLinkActive="activeLinks"  >Radars</a>
+          <a class="nav-link active text-white   "  routerLink="/user/radars"  routerLinkActive="activeLinks"  >Radars</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/infractions" routerLinkActive="activeLinks">Infractions</a>
+          <a class="nav-link text-white" routerLink="/user/infractions" routerLinkActive="activeLinks">Infractions</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/vehicles" routerLinkActive="activeLinks">Vehicles</a>
+          <a class="nav-link text-white" routerLink="/user/vehicles" routerLinkActive="activeLinks">Vehicles</a>
         </li>
       </ul>
       <button class="btn "><i class="bi bi-app-indicator me-3"  style="color: yellow; font-size: 1.2rem "></i></button>
-      <button class="btn text-white sign-out-btn btn-sm">Sign-out</button>
+      <button class="btn text-white sign-out-btn btn-sm" (click)="logout()">Sign-out</button>
     </div>
   </div>
 </nav>
+
+<router-outlet></router-outlet>
 

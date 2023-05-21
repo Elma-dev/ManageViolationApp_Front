@@ -8,7 +8,7 @@ import {throwErr} from "sweetalert/typings/modules/utils";
   providedIn: 'root'
 })
 export class AuthenticatService {
-  appUsers!:User[]
+  appUsers:User[]=[]
   authenticatUser:User|undefined
 
   constructor() {
@@ -19,7 +19,7 @@ export class AuthenticatService {
 
   //Valid Information Login
   public login(username:string,password:string):Observable<User>{
-    let user=this.appUsers.find(u=>{u.username==username});
+    let user=this.appUsers.find(u=>{return u.username===username});
     if(user==undefined){
       return throwError(()=>new Error("Some Information Incorrect!"));
     }
@@ -43,7 +43,7 @@ export class AuthenticatService {
 
   //userIs Authenticate
   public isAuthenticate():boolean{
-    return this.authenticatUser!=undefined
+    return (this.authenticatUser!=undefined)
   }
 
   public logout():Observable<boolean>{

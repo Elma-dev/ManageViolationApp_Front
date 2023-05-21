@@ -5,13 +5,18 @@ import {InfractionComponent} from "./components/infraction/infraction.component"
 import {VehicleComponent} from "./components/vehicle/vehicle.component";
 import {HomeComponent} from "./components/home/home.component";
 import {AuthenticatComponent} from "./components/authenticat/authenticat.component";
+import {NavbarComponent} from "./components/navbar/navbar.component";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {path:"login",component:AuthenticatComponent},
-  {path:'radars',component:RadarComponent},
-  {path:'infractions',component:InfractionComponent},
-  {path:'vehicles',component:VehicleComponent},
-  {path:'',component:HomeComponent}
+  {path:'',component:AuthenticatComponent},
+  {path:"user",component:NavbarComponent,canActivate:[AuthGuard],children:[
+      {path:'home',component:HomeComponent},
+      {path:'radars',component:RadarComponent},
+      {path:'vehicles',component:VehicleComponent},
+      {path:'infractions',component:InfractionComponent},
+    ]}
 ];
 
 @NgModule({
