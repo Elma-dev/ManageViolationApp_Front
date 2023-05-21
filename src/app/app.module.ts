@@ -12,6 +12,7 @@ import { InfractionComponent } from './components/infraction/infraction.componen
 import { VehicleComponent } from './components/vehicle/vehicle.component';
 import { HomeComponent } from './components/home/home.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AuthenticatComponent } from './components/authenticat/authenticat.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     RadarComponent,
     InfractionComponent,
     VehicleComponent,
-    HomeComponent
+    HomeComponent,
+    AuthenticatComponent
   ],
 
   imports: [
